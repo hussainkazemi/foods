@@ -5,13 +5,22 @@ function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+RemoveEmptyAndFrequently = function(foods){
+    var cleanFoods = [];
+
+    foods.forEach(food => {
+        if (food !== "" && cleanFoods.indexOf(food) == -1)
+            cleanFoods.push(food);
+    });
+    return cleanFoods;
+}
+
 ReadFoods = async function(){
     const fs = require('fs');
     try { 
         const data = fs.readFileSync(__dirname+'/foods.txt', 'utf8')
         let foods = data.split('\n');
-        // split return a empty element in last of arry. here remove last index for create clean array
-        return foods;
+        return RemoveEmptyAndFrequently(foods);
       } catch (err) {
         console.error(err)
       }    
